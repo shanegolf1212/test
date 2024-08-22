@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAMPLING GUIDE</title>
+    <link rel="stylesheet" href="style.css">
+     <script src="auth-check.js"></script>
+</head>
+<body>
+    <header class="main-header">
+        <div class="site-name">SL Media Orders</div>
+        <nav>
+            <a href="index.html" class="active">Home</a>
+            <!-- <a href="order_media.html">Order Media</a>
+            <a href="how_to_sample.html">How to Sample</a> -->
+
+            <a href="edit.html" id="edit-link" style="display: none;">Edit Compounds and Methods</a>
+            <a href="import-export.html" id="importexport-link" style="display: none;">Import/Export</a>
+            <a href="notes.html" id="notes-link" style="display: none;">Notes</a>
+            <a href="register.html" id="register-link" style="display: none;">Register</a>
+            <a href="sign-in.html" id="sign-in-button">Sign In</a>
+            <a href="#" id="sign-out-button" style="display: none;">Sign Out</a>
+        </nav>
+    </header>
+    <div class="content">
+        <h1>SAMPLING GUIDE</h1>
+        <div class="tabs">
+            <button onclick="showTab('search')">SEARCH</button>
+            <button onclick="showTab('browse')">BROWSE</button>
+            <button onclick="showTab('panel')">PANEL</button>
+        </div>
+        <div id="search-tab">
+            <div class="search-container">
+                <h2>Search through our list of compounds, methods and CAS#.</h2>
+                <div class="search-bar">
+                    <input type="text" id="search-input" placeholder="Enter your search term">
+                    <button onclick="performSearch()">SEARCH</button>
+                </div>
+                <p>By Compound, CAS# or Panel</p>
+            </div>
+            <div id="search-results"></div>
+        </div>
+        <div id="browse-tab" style="display: none;">
+            <h2>Browse our list of compounds in alphabetical index</h2>
+            <div id="alphabet-grid"></div>
+        </div>
+        <div id="panel-tab" style="display: none;">
+            <h2>Browse by Panel</h2>
+            <div id="panel-grid" style="display: flex; flex-wrap: wrap; justify-content: flex-start;">
+                <!-- Panel items will go here -->
+            </div>
+        </div>
+        <div id="compound-popup" class="popup" style="display: none;">
+            <div class="popup-content">
+                <h2 id="popup-title"></h2>
+                <div id="compound-list"></div>
+                <div class="pagination">
+                    <button onclick="changePage('previous')">« Previous</button>
+                    <span id="page-info"></span>
+                    <button onclick="changePage('next')">Next »</button>
+                </div>
+                <button onclick="closePopup()" class="back-button">Back</button>
+            </div>
+        </div>
+        <div id="loading-overlay" style="display: none;">
+            <div class="loading-spinner"></div>
+        </div>
+    </div>
+   
+    
+    <script src="script.js"></script>
+
+</body>
+</html>

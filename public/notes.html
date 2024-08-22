@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes Dashboard</title>
+    <link rel="stylesheet" href="style.css"> <!-- Link your existing CSS -->
+</head>
+<body>
+    <header class="main-header">
+        <div class="site-name">SL Media Orders</div>
+        <nav>
+            <a href="index.html">Home</a>
+            <!-- <a href="order_media.html">Order Media</a>
+            <a href="how_to_sample.html">How to Sample</a> -->
+            <a href="edit.html">Edit Compounds and Methods</a>
+            <a href="import-export.html">Import/Export</a>
+            <a href="notes.html" class="admin-only active">Notes</a>
+            <a href="register.html" id="register-link" style="display: none;">Register</a>
+            <a href="sign-in.html" id="sign-in-button">Sign In</a>
+            <a href="#" id="sign-out-button" style="display: none;">Sign Out</a>
+        </nav>
+    </header>
+
+    <!-- Loading Spinner -->
+    <div id="loading-overlay" class="loading-overlay" style="display: none;">
+        <div class="spinner"></div>
+    </div>
+
+    <div class="content">
+        <h1>Notes Dashboard</h1>
+        <div class="tabs">
+            <button class="tablink" onclick="filterNotes('open')">Open Notes</button>
+            <button class="tablink" onclick="filterNotes('inProgress')">In Progress</button>
+            <button class="tablink" onclick="filterNotes('closed')">Closed Notes</button>
+        </div>
+        <div id="notesList" class="notes-list"></div>
+        <div id="noteDetails" class="note-details"></div>
+    </div>
+
+    <!-- JavaScript Files -->
+    <script type="module" src="notes.js"></script> 
+    <script type="module" src="auth-check.js"></script>
+    <script type="module" src="sign-out.js"></script>
+</body>
+</html>

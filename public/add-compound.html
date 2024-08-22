@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Compound</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <header class="main-header">
+        <nav>
+            <a href="index.html" >Home</a>
+            <!-- <a href="order_media.html">Order Media</a>
+            <a href="how_to_sample.html">How to Sample</a> -->
+
+            <a href="edit.html" id="edit-link" style="display: none;">Edit Compounds and Methods</a>
+            <a href="import-export.html" id="importexport-link" class= 
+                "active">Import/Export</a>
+            <a href="notes.html" id="notes-link" style="display: none;">Notes</a>
+            <a href="register.html" id="register-link" style="display: none;">Register</a>
+            <a href="sign-in.html" id="sign-in-button">Sign In</a>
+            <a href="#" id="sign-out-button" style="display: none;">Sign Out</a>
+        </nav>
+    </header>
+    <div class="content">
+        <h1>Add Compound</h1>
+        <form id="add-compound-form">
+            <div class="form-group">
+                <label for="compound-name">Compound Name:</label>
+                <input type="text" id="compound-name" required>
+            </div>
+            <div class="form-group">
+                <label for="cas-number">CAS Number:</label>
+                <input type="text" id="cas-number" required>
+            </div>
+            <div class="form-group">
+                <label for="methods">Methods:</label>
+                <select id="methods" multiple>
+                    <!-- Methods will be populated here -->
+                </select>
+            </div>
+            <button type="submit">Add Compound</button>
+        </form>
+        <h2>Add Method</h2>
+        <form id="add-method-form">
+            <div class="form-group">
+                <label for="method">Method:</label>
+                <input type="text" id="method" required>
+            </div>
+            <div class="form-group">
+                <label for="media-option">Media Option:</label>
+                <input type="text" id="media-option" required>
+            </div>
+            <div class="form-group">
+                <label for="analytical-technique">Analytical Technique:</label>
+                <input type="text" id="analytical-technique" required>
+            </div>
+            <div class="form-group">
+                <label for="flow-rate">Flow Rate:</label>
+                <input type="text" id="flow-rate">
+            </div>
+            <div class="form-group">
+                <label for="air-volume">Air Volume:</label>
+                <input type="text" id="air-volume">
+            </div>
+            <div class="form-group">
+                <label for="reporting-limit">Reporting Limit:</label>
+                <input type="text" id="reporting-limit" required>
+            </div>
+            <button type="button" onclick="addMethod()">Add Method</button>
+        </form>
+    </div>
+    <script src="add-compound.js"></script>
+</body>
+</html>

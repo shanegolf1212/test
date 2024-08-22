@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Import/Export Compounds and Methods</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <script type="module" src="auth-check.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+    <style>
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            display: none; /* Initially hidden */
+        }
+
+        .spinner {
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid #3498db;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div id="loading-overlay" class="loading-overlay">
+        <div class="spinner"></div>
+    </div>
+    <div id="loading-overlay">Loading...</div>
+    <header class="main-header">
+        <div class="site-name">SL Media Orders</div>
+        <nav>
+            <a href="index.html" >Home</a>
+            <!-- <a href="order_media.html">Order Media</a>
+            <a href="how_to_sample.html">How to Sample</a> -->
+            <a href="edit.html">Edit Compounds and Methods</a>  
+            <a href="import-export.html"  class="admin-only active" >Import/Export</a>
+            <a href="notes.html">Notes</a>
+            <a href="register.html" id="register-link" style="display: none;">Register</a>
+            <a href="sign-in.html" id="sign-in-button">Sign In</a>
+            <a href="#" id="sign-out-button" style="display: none;">Sign Out</a>
+        </nav>
+    </header>
+
+    <div class="content">
+        <h1>Import/Export Compounds, Methods, and Panels</h1>
+
+        <div class="tabs">
+            <button class="tablink" onclick="openTab(event, 'ImportExport')">Import/Export</button>
+            <button class="tablink" onclick="openTab(event, 'Delete')">Delete</button>
+        </div>
+
+        <div id="ImportExport" class="tabcontent">
+            <div class="form-group">
+                <label for="type-select">Select Type:</label>
+                <select id="type-select">
+                    <option value="compounds">Compounds</option>
+                    <option value="methods">Methods</option>
+                    <option value="panels">Panels</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="file-upload">Upload Excel File:</label>
+                <input type="file" id="file-upload" accept=".xlsx, .xls">
+            </div>
+            <button id="import-button">Import</button>
+            <button id="export-button">Export</button>
+            <div id="output"></div>
+        </div>
+
+        <div id="Delete" class="tabcontent" style="display: none;">
+            <h2>Delete All Records</h2>
+            <button id="delete-all-compounds-button">Delete All Compounds</button>
+            <button id="delete-all-methods-button">Delete All Methods</button>
+            <button id="delete-all-panels-button">Delete All Panels</button>
+        </div>
+    </div>
+
+    <script type="module" src="import-export.js"></script>
+     <script type="module" src="auth-check.js"></script>
+    <script type="module" src="sign-out.js"></script>
+</body>
+</html>

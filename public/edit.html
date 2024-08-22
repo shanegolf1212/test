@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Compounds and Methods</title>
+    <!-- Link to CSS for styling -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <style>
+        .select2-container {
+            width: 100% !important;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .save-button,
+        .delete-button {
+            width: 180px;            /* Set width to be the same for both buttons */
+            padding: 10px 20px;      /* Add padding */
+            font-size: 14px;         /* Increase font size */
+            border-radius: 5px;      /* Rounded corners */
+            cursor: pointer;         /* Pointer cursor on hover */
+        }
+
+        .save-button {
+            background-color: #007bff; /* Blue background color */
+            color: white;              /* White text color */
+            border: none;              /* Remove default border */
+        }
+
+        .delete-button {
+            background-color: #ff4d4d; /* Red background color */
+            color: white;              /* White text color */
+            border: none;              /* Remove default border */
+            margin-left: 10px;         /* Space between save and delete buttons */
+        }
+        .save-button {
+            width: 150px;
+        }
+
+        .save-button:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+
+        .delete-button:hover {
+            background-color: #e60000; /* Darker red on hover */
+        }
+
+
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <div class="site-name">SL Media Orders</div>
+        <nav>
+            <a href="index.html">Home</a>
+            <!-- <a href="order_media.html">Order Media</a>
+            <a href="how_to_sample.html">How to Sample</a> -->
+            <a href="edit.html"  class="admin-only active">Edit Compounds and Methods</a>
+            <a href="import-export.html">Import/Export</a>
+             <a href="notes.html">Notes</a>
+            <a href="register.html" id="register-link" style="display: none;">Register</a>
+            <a href="sign-in.html" id="sign-in-button">Sign In</a>
+            <a href="#" id="sign-out-button" style="display: none;">Sign Out</a>
+        </nav>
+    </header>
+
+    <div class="content">
+        <h1>Edit Compounds and Methods</h1>
+        <div class="tabs">
+            <button class="tablink active" onclick="openTab(event, 'Compounds')">Compounds</button>
+            <button class="tablink" onclick="openTab(event, 'Methods')">Methods</button>
+            <button class="tablink" onclick="openTab(event, 'Panels')">Panels</button>
+        </div>
+
+        <!-- Compounds Tab -->
+        <div id="Compounds" class="tabcontent" style="display: block;">
+            <h2>Select or Edit Compounds</h2>
+            <div class="form-group">
+                <label for="select-compound">Select Compound:</label>
+                    <select id="select-compound" onchange="loadCompound(this.value)">
+                        <option value="">--Select Compound--</option>
+                    </select>
+
+                </select>
+            </div>
+            <form id="compound-form">
+                <div class="form-group">
+                    <label for="compound-name">Compound Name:</label>
+                    <input type="text" id="compound-name">
+                </div>
+                <div class="form-group">
+                    <label for="cas-number">CAS Number:</label>
+                    <input type="text" id="cas-number">
+                </div>
+                <div class="form-group">
+                    <label for="panel">Panel:</label>
+                    <select id="panel" multiple>
+                        <option value="">--Select Panel--</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="methods">Methods:</label>
+                    <select id="methods" multiple>
+                        <!-- Methods will be populated here -->
+                    </select>
+                </div>
+                <div class="form-buttons">
+                    <button type="submit" class="save-button">Save Compound</button>
+                    <button type="button" class="delete-button" onclick="confirmDelete('compound')">Delete Compound</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Methods Tab -->
+        <div id="Methods" class="tabcontent">
+            <h2>Select or Edit Methods</h2>
+            <div class="form-group">
+                <label for="select-method">Select Method:</label>
+                <select id="select-method" class="form-control" onchange="loadMethod(this.value)">
+                    <option value="">--Select Method--</option>
+                </select>
+            </div>
+            <form id="method-form">
+                <div class="form-group">
+                    <label for="method">Method:</label>
+                    <input type="text" id="method" required>
+                </div>
+                <div class="form-group">
+                    <label for="reporting-limit">Reporting Limit:</label>
+                    <input type="text" id="reporting-limit" required>
+                </div>
+                <div class="form-group">
+                    <label for="analytical-technique">Instrument:</label>
+                    <input type="text" id="analytical-technique" required>
+                </div>
+                <div class="form-group">
+                    <label for="media-option">Media Option:</label>
+                    <input type="text" id="media-option" required>
+                </div>
+                <div class="form-group">
+                    <label for="single-analyte">Single Analyte:</label>
+                    <input type="text" id="single-analyte">
+                </div>
+                <div class="form-group">
+                    <label for="additional-analyte">Additional Analyte:</label>
+                    <input type="text" id="additional-analyte">
+                </div>
+                <div class="form-group">
+                    <label for="panel-cost">Panel Cost:</label>
+                    <input type="text" id="panel-cost">
+                </div>
+                <div class="form-group">
+                    <label for="standard-tat">Standard TAT:</label>
+                    <input type="text" id="standard-tat">
+                </div>
+                <div class="form-group">
+                    <label for="flow-rate">Flow Rate:</label>
+                    <input type="text" id="flow-rate">
+                </div>
+                <div class="form-group">
+                    <label for="sampling-criteria">Sampling Criteria:</label>
+                    <input type="text" id="sampling-criteria">
+                </div>
+                <div class="form-group">
+                    <label for="shipping">Shipping:</label>
+                    <input type="text" id="shipping">
+                </div>
+                <div class="form-group">
+                    <label for="stability">Stability:</label>
+                    <input type="text" id="stability">
+                </div>
+                <div class="form-group">
+                    <label for="als-storage-policy">ALS Storage Policy:</label>
+                    <input type="text" id="als-storage-policy">
+                </div>
+                <div class="form-group">
+                    <label for="pricing-notes">Pricing Notes:</label>
+                    <input type="text" id="pricing-notes">
+                </div>
+                <div class="form-group">
+                    <label for="notes">Notes:</label>
+                    <input type="text" id="notes">
+                </div>
+                <div class="form-group">
+                    <label for="aiha-accredited">AIHA Accredited:</label>
+                    <input type="text" id="aiha-accredited">
+                </div>
+                <div class="form-group">
+                    <label for="three-sample-minimum">Three Sample Minimum:</label>
+                    <input type="text" id="three-sample-minimum">
+                </div>
+                <div class="form-group">
+                    <label for="method-panel">Panel:</label>
+                    <select id="method-panel" multiple>
+                        <option value="">--Select Panel--</option>
+                    </select>
+                </div>
+                <div class="form-buttons">
+                    <button type="submit" class="save-button">Save Method</button>
+                    <button type="button" class="delete-button" onclick="confirmDelete('method')">Delete Method</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Panels Tab -->
+        <div id="Panels" class="tabcontent">
+            <h2>Select or Edit Panels</h2>
+            <div class="form-group">
+                <label for="select-panel">Select Panel:</label>
+                <select id="select-panel" onchange="loadPanel(this.value)">
+                    <option value="">--Select Panel--</option>
+                </select>
+            </div>
+            <form id="panel-form">
+                <div class="form-group">
+                    <label for="panel-name">Panel Name:</label>
+                    <input type="text" id="panel-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="associated-panels">Associated Panels:</label>
+                    <select id="associated-panels" multiple>
+                        <option value="">--Select Associated Panels--</option>
+                    </select>
+                </div>
+                <div class="form-buttons">
+                    <button type="submit" class="save-button">Save Panel</button>
+                    <button type="button" class="delete-button" onclick="confirmDelete('panel')">Delete Panel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+     <script src="edit.js" type="module"></script>
+    <script src="auth-check.js"></script>
+</body>
+</html>
