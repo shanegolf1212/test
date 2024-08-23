@@ -10,6 +10,8 @@ const fs = require('fs');
 const upload = multer({ dest: 'uploads/' });
 const app = express();
 const port = 3000;
+const FileStore = require('session-file-store')(session);
+
 // Ensure SESSION_SECRET is set
 if (!process.env.SESSION_SECRET) {
   console.error('SESSION_SECRET is not set. Please set it as an environment variable.');
@@ -18,14 +20,19 @@ if (!process.env.SESSION_SECRET) {
 app.use(cors({ credentials: true, origin: true }));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
+
 app.use(session({
+  store: new FileStore({
+    path: './sessions',
+    retries: 0
+  }),
   secret: process.env.SESSION_SECRET,
   resave: false,
-  saveUninitialized: true,
+  saveUninitialized: false,
   cookie: { 
     secure: process.env.NODE_ENV === 'production',
-     httpOnly: true,
-    sameSite: 'lax', // Change from 'strict' to 'lax'
+    httpOnly: true,
+    sameSite: 'lax',
     maxAge: 24 * 60 * 60 * 1000 // 24 hours
   }
 }));
@@ -468,17 +475,15 @@ app.delete('/api/compounds/:id', isAdmin, async (req, res) => {
 });
 
 app.get('/api/auth-check', (req, res) => {
-  if (req.session && req.session.user) {
-    res.json({
-      authenticated: true,
-      user: {
-        email: req.session.user.email,
-        role: req.session.user.role
-      }
-    });
-  } else {
-    res.json({ authenticated: false });
-  }
+    console.log('Auth check requested. Session:', req.session);
+    if (req.session && req.session.user) {
+        res.json({
+            authenticated: true,
+            user: req.session.user
+        });
+    } else {
+        res.json({ authenticated: false });
+    }
 });
 
 
@@ -513,25 +518,23 @@ app.post('/api/sign-out', (req, res) => {
 app.post('/api/sign-in', async (req, res) => {
     const { email, password } = req.body;
     try {
-        // Authenticate user with Firebase
         const userRecord = await auth.getUserByEmail(email);
-
-        // Fetch user data from Firestore to get the correct role
         const userDoc = await db.collection('users').doc(userRecord.uid).get();
         const userData = userDoc.data();
 
-        // Update last sign-in timestamp
-        await userDoc.ref.update({
-            lastSignInAt: new Date().toISOString()
-        });
-
-        // Set session data with the correct role
         req.session.user = {
             email: userRecord.email,
-            role: userData.role || 'user' // Use the role from Firestore, default to 'user' if not set
+            role: userData.role || 'user'
         };
 
-        res.json({ success: true, user: req.session.user });
+        req.session.save((err) => {
+            if (err) {
+                console.error('Session save error:', err);
+                return res.status(500).json({ error: 'Failed to save session' });
+            }
+            console.log('Session after sign-in:', req.session);
+            res.json({ success: true, user: req.session.user });
+        });
     } catch (error) {
         console.error('Error during sign-in:', error);
         res.status(401).json({ error: 'Invalid credentials' });
